@@ -96,7 +96,7 @@ class CbPublisher(Publisher):
             self.posted_history[topic] = rawMsg
             
             obj = {s: getattr(rawMsg, s, None) for s in rawMsg.__slots__}
-            obj["type"] = rawMsg._type#.replace("/", "%2F") # OCB Specific!!
+            obj["type"] = rawMsg._type.replace("/", ".") # OCB Specific!!
             obj["id"] = (topic).replace("/", ".") # OCB Specific!!
             jsonStr = ObjectFiwareConverter.obj2Fiware(obj, ind=None, dataTypeDict=msgDefintionDict[topic],  ignorePythonMetaData=True, encode=True)
             response = requests.post(self.CB_BASE_URL, data=jsonStr, headers=self.CB_HEADER)
