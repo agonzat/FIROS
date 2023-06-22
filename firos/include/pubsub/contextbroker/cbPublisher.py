@@ -108,7 +108,7 @@ class CbPublisher(Publisher):
 
         # Create Update-JSON
         obj = {s: getattr(rawMsg, s, None) for s in rawMsg.__slots__}
-        obj["type"] = rawMsg._type.replace("/", "".") # OCB Specific!!
+        obj["type"] = rawMsg._type.replace("/", ".") # OCB Specific!!
         obj["id"] = (topic).replace("/", ".") # OCB Specific!!
         jsonStr = ObjectFiwareConverter.obj2Fiware(obj, ind=None, dataTypeDict=msgDefintionDict[topic],  ignorePythonMetaData=True, showIdValue=False, encode=True) 
         # print(jsonStr)
