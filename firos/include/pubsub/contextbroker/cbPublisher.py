@@ -96,10 +96,10 @@ class CbPublisher(Publisher):
             self.posted_history[topic] = rawMsg
             
             obj = {s: getattr(rawMsg, s, None) for s in rawMsg.__slots__}
-            obj["type"] = rawMsg._type.replace("/", "#")
-            obj["type"] = obj["type"].replace("%2F", "#") # OCB Specific!!
+            obj["type"] = rawMsg._type.replace("/", ":")
+            obj["type"] = obj["type"].replace("%2F", ":") # OCB Specific!!
             obj["id"] = (topic).replace("/", "@") # OCB Specific!!
-            jsonStr = ObjectFiwareConverter.obj2Fiware(obj, ind=None, dataTypeDict=msgDefintionDict[topic],  ignorePythonMetaData=True, encode=True)
+            jsonStr = ObjectFiwareConverter.obj2Fiware(obj, ind=None, dataTypeDict=msgDefintionDict[topic],  ignorePythonMetaData=True, encode=False)
             response = requests.post(self.CB_BASE_URL, data=jsonStr, headers=self.CB_HEADER)
             self._responseCheck(response, attrAction=0, topEnt=topic)
             return
@@ -109,10 +109,10 @@ class CbPublisher(Publisher):
 
         # Create Update-JSON
         obj = {s: getattr(rawMsg, s, None) for s in rawMsg.__slots__}
-        obj["type"] = rawMsg._type.replace("/", "#") # OCB Specific!!
-        obj["type"] = obj["type"].replace("%2F", "#")
+        obj["type"] = rawMsg._type.replace("/", ":") # OCB Specific!!
+        obj["type"] = obj["type"].replace("%2F", ":")
         obj["id"] = (topic).replace("/", "@") # OCB Specific!!
-        jsonStr = ObjectFiwareConverter.obj2Fiware(obj, ind=None, dataTypeDict=msgDefintionDict[topic],  ignorePythonMetaData=True, showIdValue=False, encode=True) 
+        jsonStr = ObjectFiwareConverter.obj2Fiware(obj, ind=None, dataTypeDict=msgDefintionDict[topic],  ignorePythonMetaData=True, showIdValue=False, encode=False) 
         # print(jsonStr)
 
         # Update attribute on ContextBroker
