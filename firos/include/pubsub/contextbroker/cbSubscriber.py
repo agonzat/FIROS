@@ -220,8 +220,8 @@ class CbSubscriber(Subscriber):
             "subject": {
                 "entities": [
                     {
-                    "id": str(topic).replace("/", "."),  # OCB Specific!!
-                    "type": topicTypes[topic].replace("/", ".") # OCB Specific!!
+                    "id": str(topic).replace("/", "@"),  # OCB Specific!!
+                    "type": topicTypes[topic].replace("/", "#") # OCB Specific!!
                     }
                 ]
             },
@@ -339,8 +339,8 @@ class CBServer:
 
             obj = self.TypeValue()
             ObjectFiwareConverter.fiware2Obj(jsonData, obj, setAttr=True, useMetaData=False, encoded=True)
-            obj.id = obj.id.replace(".", "/")
-            obj.type = obj.type.replace(".", "/")
+            obj.id = obj.id.replace("@", "/")
+            obj.type = obj.type.replace("#", "/")
             
             objType = obj.type
             topic = obj.id
